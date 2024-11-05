@@ -1,5 +1,6 @@
 #include <string>
 #include <iostream>
+#include "inventory.h"
 
 using namespace std;
 
@@ -9,6 +10,7 @@ class Player
         string name;
         int number;
         int damage_calc;
+        Inventory inventory;
 
     public:
         Player() { }
