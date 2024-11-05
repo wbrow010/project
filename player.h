@@ -8,7 +8,7 @@ class Player
     private:
         string name;
         int number;
-        int otherVariable;
+        int damage_calc;
 
     public:
         Player() { }
