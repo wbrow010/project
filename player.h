@@ -8,7 +8,6 @@ class Player
     private:
         string name;
         int number;
-        int damage_calc;
 
     public:
         Player() { }
