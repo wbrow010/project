@@ -8,6 +8,7 @@ class Player
     private:
         string name;
         int number;
+        int otherVariable;
 
     public:
         Player() { }
