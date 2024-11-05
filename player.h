@@ -9,6 +9,7 @@ class Player
         string name;
         int number;
         int damage_calc;
+        string map;
 
     public:
         Player() { }
