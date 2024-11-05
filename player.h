@@ -7,6 +7,7 @@ class Player
 {
     private:
         string name;
+        int number;
 
     public:
         Player() { }
