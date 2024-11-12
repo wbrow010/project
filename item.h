@@ -1,11 +1,14 @@
 #include <string>
 #include <iostream>
 
+using namespace std;
+
 class Item
 {
     private:
-        std::string name;
+        string name;
+        float weight;
 
     public:
-        Item() { }
+        Item(string name, float weight) : name(name), weight(weight) { }
 };
