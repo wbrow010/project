@@ -10,7 +10,7 @@ class Player
         string name;
         int number;
         int damage_calc;
-        float max_weight = 75.0;
+        float max_weight = 75.0; 
         Inventory inventory;
 
     public:

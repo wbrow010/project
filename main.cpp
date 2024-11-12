@@ -1,10 +1,11 @@
 #include <iostream>
 #include "player.h"
 
+using namespace std;
 int main()
 {
     Player player;
     
-    std::cout << "Hello, world!" << std::endl;
+    cout << "Hello, user." << endl;
     return 0;
 }
