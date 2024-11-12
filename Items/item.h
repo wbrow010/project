@@ -11,4 +11,11 @@ class Item
 
     public:
         Item(string name, float weight) : name(name), weight(weight) { }
+
+        /// @brief Gets the weight of the item
+        /// @return the weight as a `float`
+        float getWeight()
+        {
+            return weight;
+        }
 };
