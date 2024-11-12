@@ -3,6 +3,8 @@
 
 int main()
 {
+    Player player;
+    
     std::cout << "Hello, world!" << std::endl;
     return 0;
 }
