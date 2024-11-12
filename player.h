@@ -14,5 +14,13 @@ class Player
         Inventory inventory;
 
     public:
-        Player() { }
+        Player() : inventory(Inventory(10.0f, 20.0f))
+        {
+
+        }
+
+        Inventory& getInventory()
+        {
+            return inventory;
+        }
 };

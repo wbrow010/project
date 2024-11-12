@@ -14,7 +14,7 @@ class Item
 
         /// @brief Gets the weight of the item
         /// @return the weight as a `float`
-        float getWeight()
+        float getWeight() const
         {
             return weight;
         }

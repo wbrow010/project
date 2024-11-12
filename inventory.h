@@ -7,10 +7,11 @@ class Inventory
 {
     private:
         vector<Item> items;
+        float encumberedWeight;
         float maximumWeight;
         
     public:
-        Inventory(float maximumWeight) : maximumWeight(maximumWeight)
+        Inventory(float encumberedWeight, float maximumWeight) : encumberedWeight(encumberedWeight), maximumWeight(maximumWeight)
         {
 
         }
@@ -28,6 +29,11 @@ class Inventory
 
             return false;
         }
+
+        bool removeItem(string name)
+        {
+            //Add this
+        }
         
         /// @brief Gets the weight of all items in the 
         /// @return sum of all item's weights as a `float`
@@ -35,9 +41,32 @@ class Inventory
         {
             float weight = 0;
 
-            for (Item item : items)
+            for (Item& item : items)
             {
                 weight += item.getWeight();
             }
+
+            return weight;
+        }
+
+        float map(float value, float inLow, float inHigh, float toLow, float toHigh)
+        {
+            return (value - inLow) * (toHigh - toLow) / (inHigh - inLow) + toLow;
+        }
+
+        float lerp(float a, float b, float t)
+        {
+            return a + (b - a) * t;
+        }
+
+        /// @brief Gets a factor based on how encumbered the inventory is
+        /// @return Range from `0 - 1` based on how encumbered
+        float encumberedFactor()
+        {
+            float weight = getInventoryWeight();
+
+            if (weight < encumberedWeight) return 0;
+
+            return map(weight, encumberedWeight, maximumWeight, 0, 1);
         }
 };

@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": false,
-      "cwd": "/home/wbrow010/Documents/project",
-      "program": "/home/wbrow010/Documents/project/build/Debug/outDebug",
+      "cwd": "/local/files/wbrow010/Documents/project",
+      "program": "/local/files/wbrow010/Documents/project/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
