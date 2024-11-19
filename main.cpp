@@ -1,18 +1,27 @@
 #include <iostream>
 #include "player.h"
+#include <cstring>
+
+#include "printing.h"
 
 using namespace std;
+
 int main()
 {
+
+    bool quit = false;
     Player player;
 
-    Inventory& playerInventory = player.getInventory();
+    message("THE GAME STARTS");
 
-    playerInventory.addItem(Item("big item", 17.5f));
-    float playerEncumberedFactor = playerInventory.encumberedFactor();
+    while (!quit)
+    {
+        // Get the user input
+        string input;
+        cin >> input;
 
-    cout << playerEncumberedFactor << endl; 
-    
-    cout << player.getInventoryWeight() << endl;
+        
+    }
+
     return 0;
 }
