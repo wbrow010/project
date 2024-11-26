@@ -33,6 +33,7 @@ class Inventory
         bool removeItem(string name)
         {
             //Add this
+            return false;
         }
         
         /// @brief Gets the weight of all items in the 

@@ -1,61 +1,80 @@
 #include <string>
 #include <map>
 #include "printing.h"
+#include "functional"
 
 using namespace std;
 
 struct DialogNode
 {
-    string text;
-    map<string, DialogNode*> options;
+    DialogNode(string text) : text(text) { }
 
-    display()
+    string text;
+
+    virtual void display() = 0;
+};
+
+/// @brief Dialog node that can continue to another node
+struct DialogNodeContinuous : DialogNode
+{
+    DialogNodeContinuous(string text, DialogNode* next = nullptr) : DialogNode(text), next(next) { }
+
+    DialogNode* next;
+
+    void display() override
     {
-        
+        dialogMessage(text);
+
+        cin.get(); 
+
+        if (next != NULL)
+        {
+            next->display();
+        }
     }
 };
 
-struct DialogNodeEvent : public DialogNode
+/// @brief Dialog Node with choices
+struct DialogNodeChoice : DialogNode
 {
+    DialogNodeChoice(string text, map<string, DialogNode*> options) : DialogNode(text), options(options) { }
 
-}
+    map<string, DialogNode*> options;
 
-DialogNode* exampleDialog = new DialogNode
-{
-    "This is a test of the DialogNode system",
+    void display() override
     {
-        {
-            "I'm option one, and should be represented with the proper number.", 
-            new DialogNode
-            {
-                "Do you want to see what I have to sell?",
-                {
-                    {
-                        "Yes",
-                        new DialogNode { "Okay, Opening Shop Window" }
-                    },
-                    {
-                        "No",
-                        new DialogNode { "Okay, Goodbye" }
-                    }
-                }
-            }
-        },
+        dialogMessage(text);
 
+        cin.get(); 
+
+        DialogNode* next = mapOptions(options);
+
+        if (next != NULL)
         {
-            "I'm option two, and should be represented with the proper number.",
-            new DialogNode
-            {
-                "The dialog system should be able to execute events",
-                {
-                    {
-                        "I want treasure", new DialogNode{"You encounter a wild animal!"}
-                    },
-                    {
-                        "End Conversation", new DialogNode{"You encounter a wild animal!"}
-                    }
-                }
-            }
+            next->display();
         }
     }
-}
+};
+
+/// @brief Dialog Node that can run an event function
+struct DialogNodeEvent : DialogNodeContinuous
+{
+    DialogNodeEvent(string text, function<void()> event, DialogNode* next = nullptr) : DialogNodeContinuous(text, next), event(event) { }
+
+    function<void()> event;
+
+    void display() override
+    {
+        dialogMessage(text);
+
+        cin.get(); 
+
+        event();
+
+        if (next != NULL)
+        {
+            next->display();
+        }
+    }
+
+};

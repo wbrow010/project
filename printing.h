@@ -1,3 +1,6 @@
+#ifndef PRINTING_H
+#define PRINTING_H
+
 #include <string>
 #include <cstring>
 #include <iostream>
@@ -45,17 +48,73 @@ void message(string message)
 
 /// @brief Prints a message to the console, in dialog format
 /// @param dialog dialog to print
-void dialog(string dialog)
+void dialogMessage(string dialog)
 {
-    cout << "\"" << message << "\"" << endl;
+    cout << "\"" << dialog << "\"" << endl;
+}
+
+void errorMessage(string message)
+{
+    cout << "ERROR: " << message << endl;
 }
 
 int options(vector<string> options)
 {
-    for (int i = 0; i < options.size(); i++)
+    int numberOfOptions = options.size();
+    //List the options
+    for (int i = 0; i < numberOfOptions; i++)
     {
         cout << options[i] << " " << i << endl;
     }
 
-    return 0; // change this to return an input number
+    while(true)
+    {
+        int inputChoice;
+
+        cout << "Enter a choice: ";
+        cin >> inputChoice;
+
+        if (inputChoice >= 0 && inputChoice < numberOfOptions)
+        {
+            return inputChoice;
+        }
+
+        cout << "Invalid choice, try again." << endl;
+    }
 }
+
+template <typename T>
+T mapOptions(map<string, T> options)
+{
+    int index = 1;
+
+    map<int, T> indexedOptions;
+
+    for (const auto& [key, value] : options)
+    {
+        cout << index << ": " << key << '\n';
+        indexedOptions[index] = value;
+        index++;
+    }
+
+    int choice = 0;
+
+    while (true) 
+    {
+        cout << "Enter your choice: ";
+        cin >> choice;
+
+        if (cin.fail() || indexedOptions.find(choice) == indexedOptions.end())
+        {
+            cout << "Invalid choice, try again." << endl;
+        }
+        else
+        {
+            break;
+        }
+    }
+
+    return indexedOptions[choice];
+}
+
+#endif
