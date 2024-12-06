@@ -1,26 +1,38 @@
 #include <string>
 #include <iostream>
 #include "inventory.h"
+#include "entity.h"
 
 using namespace std;
 
-class Player
+class Player : public Entity
 {
     private:
-        string name;
-        int number;
-        int damage_calc;
-        float max_weight = 75.0; 
-        Inventory inventory;
 
     public:
-        Player() : inventory(Inventory(10.0f, 20.0f))
+        Player() : Entity(Stats{0, 0, 0, 0}, "DefaultPlayer") {}
+    
+        Player(Stats stats, string name) : Entity(stats, name)
         {
 
         }
 
-        Inventory& getInventory()
+        void displayInventory()
         {
-            return inventory;
+            getInventory().displayContents();
+        }
+
+        bool addItem(Item item)
+        {
+            if (Entity::addItem(item))
+            {
+                cout << name << " added item: " << item.getName() << endl;
+                return true;
+            }
+            else
+            {
+                cout << name << " could not add item: " << item.getName() << ". Inventory is full or too heavy!" << endl;
+                return false;
+            }
         }
 };

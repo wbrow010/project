@@ -1,3 +1,6 @@
+#ifndef DIALOG_H
+#define DIALOG_H
+
 #include <string>
 #include <map>
 #include "printing.h"
@@ -5,25 +8,28 @@
 
 using namespace std;
 
+/// @brief Base dialog node class
 struct DialogNode
 {
-    DialogNode(string text) : text(text) { }
+    DialogNode(string speaker, string text) : speaker(speaker), text(text) { }
 
+    string speaker;
     string text;
 
+    /// @brief
     virtual void display() = 0;
 };
 
 /// @brief Dialog node that can continue to another node
 struct DialogNodeContinuous : DialogNode
 {
-    DialogNodeContinuous(string text, DialogNode* next = nullptr) : DialogNode(text), next(next) { }
+    DialogNodeContinuous(string speaker, string text, DialogNode* next = nullptr) : DialogNode(speaker, text), next(next) { }
 
     DialogNode* next;
 
     void display() override
     {
-        dialogMessage(text);
+        dialogMessage(speaker, text);
 
         cin.get(); 
 
@@ -37,13 +43,13 @@ struct DialogNodeContinuous : DialogNode
 /// @brief Dialog Node with choices
 struct DialogNodeChoice : DialogNode
 {
-    DialogNodeChoice(string text, map<string, DialogNode*> options) : DialogNode(text), options(options) { }
+    DialogNodeChoice(string speaker, string text, map<string, DialogNode*> options) : DialogNode(speaker, text), options(options) { }
 
     map<string, DialogNode*> options;
 
     void display() override
     {
-        dialogMessage(text);
+        dialogMessage(speaker, text);
 
         cin.get(); 
 
@@ -59,13 +65,13 @@ struct DialogNodeChoice : DialogNode
 /// @brief Dialog Node that can run an event function
 struct DialogNodeEvent : DialogNodeContinuous
 {
-    DialogNodeEvent(string text, function<void()> event, DialogNode* next = nullptr) : DialogNodeContinuous(text, next), event(event) { }
+    DialogNodeEvent(string speaker, string text, function<void()> event, DialogNode* next = nullptr) : DialogNodeContinuous(speaker, text, next), event(event) { }
 
     function<void()> event;
 
     void display() override
     {
-        dialogMessage(text);
+        dialogMessage(speaker, text);
 
         cin.get(); 
 
@@ -78,3 +84,5 @@ struct DialogNodeEvent : DialogNodeContinuous
     }
 
 };
+
+#endif

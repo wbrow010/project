@@ -1,3 +1,6 @@
+#ifndef INVENTORY_H
+#define INVENTORY_H
+
 #include "Items/item.h"
 #include <vector>
 
@@ -7,11 +10,9 @@ class Inventory
 {
     private:
         vector<Item> items;
-        float encumberedWeight;
-        float maximumWeight;
         
     public:
-        Inventory(float encumberedWeight, float maximumWeight) : encumberedWeight(encumberedWeight), maximumWeight(maximumWeight)
+        Inventory()
         {
 
         }
@@ -19,7 +20,7 @@ class Inventory
         /// @brief Adds an item to the inventory
         /// @param item item to add to the inventory
         /// @return `true` if item could be added without exceeding maximum weight, `false` if not
-        bool addItem(Item item)
+        bool addItem(Item item, float maximumWeight)
         {
             if (item.getWeight() + getInventoryWeight() <= maximumWeight)
             {
@@ -32,10 +33,34 @@ class Inventory
 
         bool removeItem(string name)
         {
-            //Add this
-            return false;
+            // Loop through the inventory to find the item by name
+            for (auto it = items.begin(); it != items.end(); ++it)
+            {
+                if (it->getName() == name)
+                {
+                    // Remove the item from the vector
+                    items.erase(it);
+                    return true;  // Successfully removed the item
+                }
+            }
+
+            return false;  // Item with the specified name was not found
         }
-        
+
+        void displayContents()
+        {
+            if (items.empty())
+            {
+                cout << "Inventory is empty." << endl;
+                return;
+            }
+            cout << "Inventory Contents:" << endl;
+            for (const Item& item : items)
+            {
+                cout << "- " << item.getName() << " (Weight: " << item.getWeight() << ")" << endl;
+            }
+        }
+
         /// @brief Gets the weight of all items in the 
         /// @return sum of all item's weights as a `float`
         float getInventoryWeight()
@@ -62,7 +87,7 @@ class Inventory
 
         /// @brief Gets a factor based on how encumbered the inventory is
         /// @return Range from `0 - 1` based on how encumbered
-        float encumberedFactor()
+        float getEncumberedFactor(float encumberedWeight, float maximumWeight)
         {
             float weight = getInventoryWeight();
 
@@ -71,3 +96,5 @@ class Inventory
             return map(weight, encumberedWeight, maximumWeight, 0, 1);
         }
 };
+
+#endif

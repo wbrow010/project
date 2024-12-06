@@ -1,3 +1,6 @@
+#ifndef ITEM_H
+#define ITEM_H
+
 #include <string>
 #include <iostream>
 
@@ -18,4 +21,11 @@ class Item
         {
             return weight;
         }
+
+        string getName() const
+        {
+            return name;
+        }
 };
+
+#endif

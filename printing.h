@@ -48,9 +48,9 @@ void message(string message)
 
 /// @brief Prints a message to the console, in dialog format
 /// @param dialog dialog to print
-void dialogMessage(string dialog)
+void dialogMessage(string speaker, string dialog)
 {
-    cout << "\"" << dialog << "\"" << endl;
+    cout << speaker << ": "<< "\"" << dialog << "\"" << endl;
 }
 
 void errorMessage(string message)
@@ -90,12 +90,16 @@ T mapOptions(map<string, T> options)
 
     map<int, T> indexedOptions;
 
-    for (const auto& [key, value] : options)
+    for (const auto& pair : options)
     {
+        const auto& key = pair.first;
+        const auto& value = pair.second;
+
         cout << index << ": " << key << '\n';
         indexedOptions[index] = value;
         index++;
     }
+
 
     int choice = 0;
 
